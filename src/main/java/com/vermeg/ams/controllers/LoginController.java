@@ -1,5 +1,7 @@
 package com.vermeg.ams.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +11,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.vermeg.ams.entities.Book;
 import com.vermeg.ams.entities.User;
 import com.vermeg.ams.services.UserService;
 
 @Controller
 public class LoginController {
+	
+	public static String email;
 	
 	@Autowired
 	private UserService userService;
@@ -29,14 +35,14 @@ public class LoginController {
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public ModelAndView accueil() {
+		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("home");
 		return modelAndView;
 	}
+
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public ModelAndView registration() {
-		
-		
 		ModelAndView modelAndView = new ModelAndView();
 		User user = new User();
 		modelAndView.addObject("user", user);
@@ -46,8 +52,6 @@ public class LoginController {
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-		
-		
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
@@ -56,7 +60,8 @@ public class LoginController {
 		}
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("registration");
-		}else {
+		} else {
+			
 			userService.saveUser(user);
 			modelAndView.addObject("successMessage", "User has been registered successfully");
 			modelAndView.addObject("user", new User());
