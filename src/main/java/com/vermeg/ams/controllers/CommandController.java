@@ -1,5 +1,7 @@
 package com.vermeg.ams.controllers;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vermeg.ams.entities.Book;
 import com.vermeg.ams.entities.Command;
+import com.vermeg.ams.entities.LigneCommand;
 import com.vermeg.ams.repositories.BookRepository;
 import com.vermeg.ams.repositories.CommandRepository;
+import com.vermeg.ams.repositories.LigneCommandRepository;
+import com.vermeg.ams.controllers.CommandController;
 
 @Controller
 @RequestMapping("/command/")
@@ -24,11 +29,14 @@ public class CommandController {
 
 	private final CommandRepository commandRepository;
 	private static BookRepository bookRepository;
+	private final LigneCommandRepository lignecommandRepository;
 
 	@Autowired
-	public CommandController(CommandRepository commandRepository, BookRepository bookRepository) {
+	public CommandController(CommandRepository commandRepository, BookRepository bookRepository,
+			LigneCommandRepository lignecommandRepository) {
 		this.commandRepository = commandRepository;
 		this.bookRepository = bookRepository;
+		this.lignecommandRepository = lignecommandRepository;
 	}
 
 	public static double calculateTotalPrice() {
@@ -78,12 +86,26 @@ public class CommandController {
 	}
 
 	@PostMapping("add")
-	public String addCommand(@Valid Command command, BindingResult result, Model model) {
+	public String addCommand(BindingResult result, Model model, @Valid LigneCommand lignecommand) {
 		if (result.hasErrors()) {
 			return "Command/addCommand";
 		}
+
+		Command command = new Command(LocalDate.now(), CommandController.calculateTotalPrice());
+		List<Book> lb = (List<Book>) bookRepository.findAll();
+		List<Book> lbCart = new ArrayList<>();
 		commandRepository.save(command);
-		return "redirect:list";
+		for (Book b : lb) {
+			if (b.getCart()) {
+				lbCart.add(b);
+				b.setCart(false);
+				b.setQuantity(b.getQuantity() - 1);
+			}
+			lignecommand.setBook(b);
+			lignecommand.setCommand(command);
+			lignecommandRepository.save(lignecommand);
+		}
+		return "redirect:../command/list";
 	}
 
 	@GetMapping("delete/{id}")
