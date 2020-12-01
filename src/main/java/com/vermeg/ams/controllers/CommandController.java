@@ -86,8 +86,8 @@ public class CommandController {
 	}
 
 	@PostMapping("add")
-	public String addCommand(BindingResult result, Model model, @Valid LigneCommand lignecommand) {
-		if (result.hasErrors()) {
+	public String addCommand(BindingResult result, Model model) {
+		/*if (result.hasErrors()) {
 			return "Command/addCommand";
 		}
 
@@ -104,7 +104,9 @@ public class CommandController {
 			lignecommand.setBook(b);
 			lignecommand.setCommand(command);
 			lignecommandRepository.save(lignecommand);
-		}
+		}*/
+		
+	//	Command command =new Command(LocalDate.now(), CommandController.calculateTotalPrice());
 		return "redirect:../command/list";
 	}
 
