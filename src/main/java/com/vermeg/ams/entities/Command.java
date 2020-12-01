@@ -35,7 +35,6 @@ public class Command {
 	private Double totalPrice;
 
 	public Command(LocalDate date, Double totalPrice) {
-
 		this.date = date;
 		this.totalPrice = totalPrice;
 	}
@@ -71,6 +70,7 @@ public class Command {
 	@JoinColumn(name = "user_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private User user;
+	
 	public User getUser() {
 		return user;
 	}

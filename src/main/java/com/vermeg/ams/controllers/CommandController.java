@@ -2,7 +2,9 @@ package com.vermeg.ams.controllers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vermeg.ams.entities.Book;
 import com.vermeg.ams.entities.Command;
@@ -55,7 +58,9 @@ public class CommandController {
 		return totalPrice;
 	}
 */
-	@GetMapping("addToCart/{id}")
+	
+	
+	/*@GetMapping("addToCart/{id}")
 	public String addToCart(@PathVariable("id") long id, Model model) {
 
 		Book book = bookRepository.findById(id)
@@ -65,7 +70,7 @@ public class CommandController {
 		//model.addAttribute("Totalprice", calculateTotalPrice());
 
 		return "redirect:../add";
-	}
+	}*/
 
 	@GetMapping("list")
 	// @ResponseBody
@@ -80,8 +85,9 @@ public class CommandController {
 	}
 
 	@GetMapping("listBooks")
-	// @ResponseBody
+	//@ResponseBody
 	public String listBookForCommand(Model model) {
+		
 		List<Book> lp = (List<Book>) bookRepository.findAll();
 
 		if (lp.size() == 0)
@@ -103,14 +109,22 @@ public class CommandController {
 		model.addAttribute("commands", lp);
 		return "Command/listCommands";
 	}
-	@GetMapping("add")
+	
+	@GetMapping("show/{id}")
+	public String showDetailsCommand(@PathVariable("id") long id, Model model) {
+		List<Book> b = new ArrayList<>();
+		Map<Book, Integer> p = new HashMap<Book, Integer>();
+		
+		List<LigneCommand> lc = lignecommandRepository.findLigneCommandByCommand(id);
+		
+		for(LigneCommand l : lc) {
+			p.put(l.getBook(),l.getQuantity());
+		}
 
-	public String showAddCommandForm(Model model) {
-/*
-		List<Book> lb = (List<Book>) bookRepository.findAll();
-		model.addAttribute("books", lb);
-		model.addAttribute("Totalprice", calculateTotalPrice());*/
-		return "Command/addCommand";
+		
+		model.addAttribute("books", p);
+		
+		return "Command/showDetails";
 	}
 
 	@PostMapping("add")

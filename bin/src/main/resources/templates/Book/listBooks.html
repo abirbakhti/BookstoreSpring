@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Commands</title>
+<title>Books</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -15,50 +15,58 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="http://127.0.0.1:82"><i
-			class="fas fa-book"></i> AKA Bookstore</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="http://127.0.0.1:82"><i class="fas fa-book"></i> AKA
+			Bookstore</a>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link"
-					href="http://127.0.0.1:82">Home</a></li>
+				<li class="nav-item active"><a class="nav-link" href="http://127.0.0.1:82">Home</a></li>
 				<li class="nav-item"><a class="nav-link" href="/book/list/">Book</a></li>
 				<li class="nav-item"><a class="nav-link" href="/command/list/">Command</a></li>
 			</ul>
 		</div>
 	</nav>
 
-	<h2 align="center" class="my-5">List of Commands</h2>
+
+
+	<h2 align="center" class="my-5">List of books</h2>
 	<div class="container my-2">
 		<div class="card">
 			<div class="card-body">
-				<div th:switch="${commands}" class="container my-5">
+				<div th:switch="${books}" class="container my-5">
 					<p class="my-5">
-					<!-- per role -->
-						<a th:href="@{'/command/listBooks'}" class="btn btn-dark"><i class="fas fa-plus-circle"></i> Add command</i></a>
+						<a th:href="@{'/book/add/'}" class="btn btn-dark"><i
+							class="fas fa-plus-circle"></i> Add book</i></a>
 					</p>
 					<div class="col">
-						<h2 th:case="null">No commands yet!</h2>
+						<h2 th:case="null">No books yet!</h2>
 						<div th:case="*">
 							<table class="table table-striped table-responsive-md">
 								<thead>
 									<tr style="text-align:center;">
-										<th>Id</th>
-										<th>Date</th>
+										<th>Title</th>
+										<th>Author</th>
 										<th>Price</th>
-										<th>User Name</th>
-									
-										<th>Details</th>
+										<th>Quantity</th>
+										<th>Release date</th>
+										<th>Image</th>
+										<th>Edit</th>
+										<th>Delete</th>
 									</tr>
 								</thead>
 								<tbody style="text-align:center;">
-									<tr th:each="command : ${commands}">
-										<td th:text="${command.id}"></td>
-										<td th:text="${command.date}"></td>
-										<td th:text="${command.totalPrice}"></td>
-										<td th:text="${command.user.name}"></td>
-										
-										<td><a th:href=@{/command/show/{id}(id=${command.id})}  class="btn btn-primary"><i class="fas fa-user-show ml-2"></i>Show Details</a></td>
+									<tr th:each="book : ${books}">
+										<td th:text="${book.title}"></td>
+										<td th:text="${book.author}"></td>
+										<td th:text="${book.price}"></td>
+										<td th:text="${book.quantity}"></td>
+										<td th:text="${book.releaseDate}"></td>
+										<td ><img alt="Image" th:src="@{'/uploads/'+
+${book.picture}}" width="50" height="50"/></td>
+										<td><a th:href="@{/book/edit/{id}(id=${book.id})}"
+											class="btn btn-primary"><i class="far fa-edit"></i></a></td>
+										<td ><a  th:href="@{/book/delete/{id}(id=${book.id})}"
+											class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
 									</tr>
 								</tbody>
 							</table>

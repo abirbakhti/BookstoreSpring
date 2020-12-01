@@ -13,4 +13,6 @@ public interface CommandRepository extends JpaRepository<Command, Long> {
 	@Query(value = "SELECT * FROM command a WHERE a.user_id = ?1", nativeQuery = true)
 	List<Command> findCommandByIdUser(long id);
 
+	
+
 }

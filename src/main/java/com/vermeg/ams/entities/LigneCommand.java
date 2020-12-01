@@ -25,8 +25,8 @@ public class LigneCommand {
 	@Column(name = "quantity")
 	private int quantity;
 
-	public LigneCommand(long id, Command command, Book book, Double price, int quantity) {
-		this.id = id;
+	public LigneCommand( Command command, Book book, Double price, int quantity) {
+
 		this.command = command;
 		this.book = book;
 		this.price = price;

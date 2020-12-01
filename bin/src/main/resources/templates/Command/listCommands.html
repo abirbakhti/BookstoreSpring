@@ -34,8 +34,8 @@
 			<div class="card-body">
 				<div th:switch="${commands}" class="container my-5">
 					<p class="my-5">
-					<!-- per role -->
-						<a th:href="@{'/command/listBooks'}" class="btn btn-dark"><i class="fas fa-plus-circle"></i> Add command</i></a>
+						<a th:href="@{'/command/listBooks'}" class="btn btn-dark"><i
+							class="fas fa-plus-circle"></i> Add command</i></a>
 					</p>
 					<div class="col">
 						<h2 th:case="null">No commands yet!</h2>

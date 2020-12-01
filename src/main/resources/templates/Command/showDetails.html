@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -40,37 +40,27 @@ MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 					<div class="col-12 mx-0">
 						<h2 th:case="null">No Books in the Commands!</h2>
 						<div th:case="*">
-							<form method="Post" th:action="@{../panier/addpanier}">
+							
 							<table class="table table-striped table-responsive-md">
 								<thead>
 									<tr style="text-align:center;">
 										<th>Picture</th>
 										<th>Title</th>
 										<th>Price</th>
-										<th>Add To Cart</th>
+										<td>Quantity</td>
 									</tr>
 								</thead>
 								<tbody style="text-align:center;">
 									<tr th:each="book : ${books}">
-										<td ><img alt="Image" th:src="@{'/uploads/'+${book.picture}}" width="50" height="50"/></td>
-										<td th:text="${book.title}"></td>
-										<td th:text="${book.price}"></td>
-										<td>
-										
-										<div th:if="${book.quantity>=1} " >
-											<input type="checkBox" name="vendu" th:value="${book.id}">
-										</div>
-										<div th:unless="${book.quantity>=1} ">
-											<p class="alert alert-danger pt-4"> Out Of Stock </p>
-										</div>
-										
-										
-										</td>
+										<td ><img alt="Image" th:src="@{'/uploads/'+${book.key.picture}}" width="50" height="50"/></td>
+										<td th:text="${book.key.title}"></td>
+										<td th:text="${book.key.price}"></td>
+										<td th:text="${book.value}"></td>
 									</tr>
 								</tbody>
 							</table>
-							<input type="submit">
-							</form>
+					
+					
 						</div>
 					</div>
 					
