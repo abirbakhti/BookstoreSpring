@@ -30,7 +30,11 @@ public class CommandController {
 	private final CommandRepository commandRepository;
 	private static BookRepository bookRepository;
 	private final LigneCommandRepository lignecommandRepository;
+	
+	public static long id_user = 2 ;
 
+	
+	
 	@Autowired
 	public CommandController(CommandRepository commandRepository, BookRepository bookRepository,
 			LigneCommandRepository lignecommandRepository) {
@@ -38,7 +42,7 @@ public class CommandController {
 		this.bookRepository = bookRepository;
 		this.lignecommandRepository = lignecommandRepository;
 	}
-
+/*
 	public static double calculateTotalPrice() {
 		Double totalPrice = 0.0;
 		List<Book> lb = (List<Book>) bookRepository.findAll();
@@ -50,15 +54,15 @@ public class CommandController {
 
 		return totalPrice;
 	}
-
+*/
 	@GetMapping("addToCart/{id}")
 	public String addToCart(@PathVariable("id") long id, Model model) {
 
 		Book book = bookRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid command Id:" + id));
-		book.setCart(!book.getCart());
+	
 		bookRepository.save(book);
-		model.addAttribute("Totalprice", calculateTotalPrice());
+		//model.addAttribute("Totalprice", calculateTotalPrice());
 
 		return "redirect:../add";
 	}
@@ -75,13 +79,37 @@ public class CommandController {
 		return "Command/listCommands";
 	}
 
+	@GetMapping("listBooks")
+	// @ResponseBody
+	public String listBookForCommand(Model model) {
+		List<Book> lp = (List<Book>) bookRepository.findAll();
+
+		if (lp.size() == 0)
+			lp = null;
+
+		model.addAttribute("books", lp);
+		return "Command/showBooks";
+	}
+
+	
+	@GetMapping("listByUser")
+	// @ResponseBody
+	public String listCommandById(Model model) {
+		List<Command> lp = (List<Command>) commandRepository.findCommandByIdUser(id_user);
+
+		if (lp.size() == 0)
+			lp = null;
+
+		model.addAttribute("commands", lp);
+		return "Command/listCommands";
+	}
 	@GetMapping("add")
 
 	public String showAddCommandForm(Model model) {
-
+/*
 		List<Book> lb = (List<Book>) bookRepository.findAll();
 		model.addAttribute("books", lb);
-		model.addAttribute("Totalprice", calculateTotalPrice());
+		model.addAttribute("Totalprice", calculateTotalPrice());*/
 		return "Command/addCommand";
 	}
 
@@ -118,21 +146,5 @@ public class CommandController {
 		return "redirect:../list";
 	}
 
-	@GetMapping("edit/{id}")
-	public String showCommandFormToUpdate(@PathVariable("id") long id, Model model) {
-		Command command = commandRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid command Id:" + id));
-		model.addAttribute("command", command);
-		return "command/updateCommand";
-	}
-
-	@PostMapping("update")
-	public String updateCommand(@Valid Command command, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-
-			return "command/updateCommand";
-		}
-		commandRepository.save(command);
-		return "redirect:list";
-	}
+	
 }

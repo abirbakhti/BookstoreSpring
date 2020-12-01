@@ -41,7 +41,7 @@ public class BookRestController {
 			book.setPrice(bookRequest.getPrice());
 			book.setQuantity(bookRequest.getQuantity());
 			book.setReleaseDate(bookRequest.getReleaseDate());
-			book.setCart(bookRequest.getCart());
+		
 			return bookRepository.save(book);
 		}).orElseThrow(() -> new ResourceNotFoundException("Book Id " + bookId + " not found"));
 	}

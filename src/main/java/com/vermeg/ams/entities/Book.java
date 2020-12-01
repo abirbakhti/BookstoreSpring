@@ -32,8 +32,7 @@ public class Book {
 	// @NotBlank(message = "Image is mandatory")
 	@Column(name = "picture")
 	private String picture;
-	@Column(name = "cart")
-	private boolean cart;
+	
 
 	public Book(long id, String title, String author, Double price, int quantity, String releaseDate, String picture) {
 		this.id = id;
@@ -43,7 +42,7 @@ public class Book {
 		this.quantity = quantity;
 		this.releaseDate = releaseDate;
 		this.picture = picture;
-		this.cart = false;
+	
 	}
 
 	public Book() {
@@ -105,13 +104,7 @@ public class Book {
 		this.picture = picture;
 	}
 
-	public boolean getCart() {
-		return cart;
-	}
 
-	public void setCart(boolean cart) {
-		this.cart = cart;
-	}
 
 	/*private List<LigneCommand> ligneCommands;
 
