@@ -41,7 +41,7 @@ public class User {
 	@Column(name = "last_name")
 	@NotEmpty(message = "*Please provide your last name")
 	private String lastName;
-	
+
 	@Column(name = "active")
 	private int active;
 
@@ -54,12 +54,10 @@ public class User {
 		this.lastName = lastName;
 		this.active = active;
 	}
-	
 
 	public User() {
 		super();
 	}
-
 
 	public int getId() {
 		return id;
@@ -107,6 +105,18 @@ public class User {
 
 	public void setActive(int active) {
 		this.active = active;
+	}
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 }

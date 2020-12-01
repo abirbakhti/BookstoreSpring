@@ -58,7 +58,7 @@ public class LigneCommandController {
 	@GetMapping("add")
 	public String addLigneCommand(Model model) {
 		Command c= new Command(LocalDate.now(),calculateTotalPrice());
-		c.setUser(new User(1,null,null,null,null,0));
+		c.setUser(new User(2,null,null,null,null,0));
 		Command c1 = commandRepository.save(c);
 		
 		for (Map.Entry<Book,Integer> m : PanierController.listbook.entrySet()) {

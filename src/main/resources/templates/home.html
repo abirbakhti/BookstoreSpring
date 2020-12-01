@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Dashboard</title>
+
+</head>
+<body>
+<div th:replace="fragments/header :: header" />  
+	
+	<div class="container">
+		<div class="starter-template">
+			<h1>Welcome to our Article Managment System Dashboard</h1>
+			<h2>
+				1. Visit our Providers, You must have ADMIN role <a
+					th:href="@{/book/list}">Book</a>
+			</h2>
+			<h2>
+				2. Visit our Article, You must have USER or ADMIN roles<a
+					th:href="@{/command/list}">Command</a>
+			</h2>
+			
+			<!-- h2>3. Visit <a th:href="@{/about}">Normal page</a></h2-->
+		</div>
+ 		<div sec:authentication="principal.authorities" id="s">sssss</div>
+		
+		
+	</div>
+	
+	<div  style="visibility: hidden;" id='user'>
+	user
+	</div>
+	<div  style="visibility: hidden;" id='admin'>
+	admin
+	</div>
+	
+	<script type="text/javascript">
+			var x = document.getElementById("s").innerText;
+
+			alert(x);
+			
+			if (x =="[USER]")
+				document.getElementById("user").style.visibility = "visible";
+			else
+				document.getElementById("admin").style.visibility = "visible";
+		</script>
+	<!-- /.container -->
+	
+	<div th:replace="fragments/footer::footer" />
+</body>
+</html>
