@@ -84,7 +84,7 @@ public class AccountController {
 		msg.setTo(email);
 		if (state == true) {
 			msg.setSubject("Account Has Been Activated");
-			msg.setText("Hello, Your account has been activated. " + "You can log in : http://127.0.0.1:81/login"
+			msg.setText("Hello, Your account has been activated. " + "You can log in : http://127.0.0.1:82/login"
 					+ " \n Best Regards!");
 		} else {
 			msg.setSubject("Account Has Been disactivated");

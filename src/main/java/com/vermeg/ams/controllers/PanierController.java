@@ -94,6 +94,16 @@ public class PanierController {
 		return "redirect:../listpanier";
 	}
 	
+	@GetMapping("cart")
+	//@ResponseBody
+	public String cart(Model model) {
+		
+		
+		
+
+		return "redirect:listpanier";
+	}
+	
 	
 	
 	

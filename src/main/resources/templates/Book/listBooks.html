@@ -26,38 +26,35 @@
 
 <!-- <div th:replace="fragments/header :: header" />  -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="http://127.0.0.1:82"><i
+		<a class="navbar-brand" ><i
 			class="fas fa-book"></i> AKA Bookstore</a>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul style="display: none;" id="admin" class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link"
-					href="http://127.0.0.1:82">Home</a></li>
+					href="http://127.0.0.1:82/home">Home</a></li>
 
 				<li class="nav-item admin"><a class="nav-link"
 					href="/book/list/">Book management</a></li>
 				<li class="nav-item admin">
-					<div hidden sec:authentication="name" id="email"></div>
+					
+						<div hidden sec:authentication="name" id="email"></div>
+				
+				
 				<li class="nav-item user"><form action="#"
 						th:action="@{/command/list}">
 
-						<input hidden type="text" id="in" name="email" /> <input class="command"
-							type="submit" value="Command management" />
+						<input hidden type="text" id="in5" name="email" /> <input
+							class="command" type="submit" value="Command management" />
 					</form> <script type="text/javascript">
 						var x = document.getElementById("email").innerText;
-						document.getElementById("in").value = x;
+						document.getElementById("in5").value = x;
 					</script></li>
-
-
-
-
-
-
-
-				</li>
+				
+				
+				
 				<li class="nav-item admin"><a class="nav-link"
 					href="/accounts/list/">Account management</a></li>
 			</ul>
-
 			<ul style="display: none;" id="user" class="navbar-nav mr-auto">
 
 
@@ -65,22 +62,22 @@
 				<li class="nav-item user"><form action="#"
 						th:action="@{/command/list}">
 
-						<input hidden type="text" id="in1" name="email" /> <input
+						<input hidden type="text" id="in10" name="email" /> <input
 							class="command" type="submit" value="My Commands" />
 					</form> <script type="text/javascript">
 						var x = document.getElementById("email").innerText;
-						document.getElementById("in1").value = x;
+						document.getElementById("in10").value = x;
 					</script></li>
 
 
 				<li class="nav-item user"><form action="#"
-						th:action="@{../lignecommand/add}">
+						th:action="@{panier/cart}">
 
-						<input hidden type="text" id="in2" name="email" /> <input
+						<input hidden type="text" id="in12" name="email" /> <input
 							class="command" type="submit" value="Cart" />
 					</form> <script type="text/javascript">
 						var x = document.getElementById("email").innerText;
-						document.getElementById("in2").value = x;
+						document.getElementById("in12").value = x;
 					</script></li>
 			</ul>
 		</div>
