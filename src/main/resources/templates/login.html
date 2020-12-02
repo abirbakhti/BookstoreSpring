@@ -1,37 +1,58 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-<title>Spring Security Tutorial</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+<title>Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/util.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<style>
+.signup {
+	width: 100%;
+	text-align: center;
+	color: #4272d7;
+}
+</style>
 </head>
 <body>
-	<form th:action="@{/registration}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Go
-			To Registration Page</button>
-	</form>
-	<div class="container">
-		<img th:src="@{/images/login.jpg}" class="img-responsive center-block"
-			width="300" height="300" alt="Logo" />
-		<form th:action="@{/login}" method="POST" class="form-signin">
-			<h3 class="form-signin-heading" th:text="Welcome"></h3>
-			<br /> <input type="text" id="email" name="email"
-				th:placeholder="Email" class="form-control" /> <br /> <input
-				type="password" th:placeholder="Password" id="password"
-				name="password" class="form-control" /> <br />
-			<div align="center" th:if="${param.error}">
-				<p style="font-size: 20; color: #FF1C19;">Email or Password
-					invalid, please verify</p>
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+				<form th:action="@{/login}" method="POST"
+					class="login100-form validate-form">
+					<span class="login100-form-title p-b-33"> Account Login </span>
+					<div class="wrap-input100 validate-input"
+						data-validate="Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" name="email" id="email"
+							placeholder="Email"> <span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+					</div>
+					<div class="wrap-input100 rs1 validate-input"
+						data-validate="Password is required">
+						<input class="input100" type="password" name="password"
+							id="password" placeholder="Password"> <span
+							class="focus-input100-1"></span> <span class="focus-input100-2"></span>
+					</div>
+					<div align="center" th:if="${param.error}">
+						<p style="font-size: 20; color: #FF1C19;">Email or Password
+							invalid, please verify</p>
+					</div>
+					<div class="container-login100-form-btn m-t-20">
+						<button type="Submit" class="login100-form-btn">Sign in</button>
+					</div>
+					<br>
+				</form>
+				<form th:action="@{/registration}" method="get">
+					<button class="signup" type="Submit"><b>Sign up</b></button>
+				</form>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" name="Submit"
-				value="Login" type="Submit" th:text="Login"></button>
-		</form>
+		</div>
 	</div>
 </body>
 </html>

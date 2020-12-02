@@ -19,6 +19,27 @@
 	border: none;
 	color: #9F9E9E;
 }
+
+.home {
+	position: absolute;
+}
+
+#title {
+	text-align: center;
+	width: 100%;
+	margin-top: 13%;
+	color: white;
+	font-size: 70px;
+	text-shadow: 5px 5px #343a40;
+}
+
+#copy {
+	text-align: center;
+	width: 100%;
+	color: white;
+	padding-top: 41%;
+	text-shadow: 2px 2px #343a40;
+}
 </style>
 </head>
 <body>
@@ -38,22 +59,15 @@
 				<li class="nav-item user"><form action="#"
 						th:action="@{/command/list}">
 
-						<input hidden type="text" id="in" name="email" /> <input class="command"
-							type="submit" value="Command management" />
+						<input hidden type="text" id="in" name="email" /> <input
+							class="command" type="submit" value="Command management" />
 					</form> <script type="text/javascript">
 						var x = document.getElementById("email").innerText;
 						document.getElementById("in").value = x;
 					</script></li>
-
-
-
-
-
-
-
 				</li>
 				<li class="nav-item admin"><a class="nav-link"
-					href="/command/list/">Account management</a></li>
+					href="/accounts/list/">Account management</a></li>
 			</ul>
 
 			<ul style="display: none;" id="user" class="navbar-nav mr-auto">
@@ -89,14 +103,18 @@
 
 		</div>
 	</nav>
-
-
-
-
-
-
-
-
+	<div>
+		<div id="image" class="home">
+			<img th:src="@{uploads/home.jpg}" width=100% height=600px />
+		</div>
+		<div id="title" class="home">
+			<p>Welcome to AKA</p>
+			<p>Bookstore</p>
+		</div>
+		<div id="copy" class="home">
+			<p>Copyright © 2020 AKA Team Vermeg</p>
+		</div>
+	</div>
 	<div hidden sec:authentication="principal.authorities" id="role"></div>
 	<script type="text/javascript">
 		var x = document.getElementById("role").innerText;
@@ -106,8 +124,5 @@
 		else
 			document.getElementById("admin").style.display = "contents";
 	</script>
-	<!-- /.container -->
-
-	<div th:replace="fragments/footer::footer" />
 </body>
 </html>
