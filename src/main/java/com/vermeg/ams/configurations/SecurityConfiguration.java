@@ -62,6 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/login").and().exceptionHandling() // une fois deconnecté redirection vers login
 
 				.accessDeniedPage("/403");
+		
 	}
 
 	// laisser l'accès aux ressources

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.vermeg.ams.entities.Book;
 import com.vermeg.ams.entities.Command;
@@ -32,6 +33,7 @@ public class LigneCommandController {
 	private final BookRepository bookRepository;
 	private final UserRepository userRepository;
 	
+	public static String email;
 	public static double calculateTotalPrice() {
 		Double totalPrice = 0.0;
 		
@@ -61,8 +63,8 @@ public class LigneCommandController {
 	
 	@GetMapping("add")
 	public String addLigneCommand(Model model) {
-	 System.out.println(LoginController.email);
-		/*
+	    
+	    System.out.println(email);
 		Command c= new Command(LocalDate.now(),calculateTotalPrice());
 		User u = userRepository.findByEmail(email);
 		c.setUser(u);
@@ -74,8 +76,8 @@ public class LigneCommandController {
 			bookRepository.save(m.getKey());
 			lignecommandRepository.save(lc);
 			
-        }*/
-		return "redirect:../command/list";
+        }
+		return "redirect:../home";
 	}
 	
 	

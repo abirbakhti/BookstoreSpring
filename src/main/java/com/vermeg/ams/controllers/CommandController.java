@@ -16,14 +16,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vermeg.ams.entities.Book;
 import com.vermeg.ams.entities.Command;
 import com.vermeg.ams.entities.LigneCommand;
+import com.vermeg.ams.entities.User;
 import com.vermeg.ams.repositories.BookRepository;
 import com.vermeg.ams.repositories.CommandRepository;
 import com.vermeg.ams.repositories.LigneCommandRepository;
+import com.vermeg.ams.repositories.UserRepository;
 import com.vermeg.ams.controllers.CommandController;
 
 @Controller
@@ -33,17 +36,18 @@ public class CommandController {
 	private final CommandRepository commandRepository;
 	private static BookRepository bookRepository;
 	private final LigneCommandRepository lignecommandRepository;
-	
-	public static long id_user = 2 ;
+	private final UserRepository userRepository;
+	public static long id_user ;
 
 	
 	
 	@Autowired
 	public CommandController(CommandRepository commandRepository, BookRepository bookRepository,
-			LigneCommandRepository lignecommandRepository) {
+			LigneCommandRepository lignecommandRepository,UserRepository userRepository) {
 		this.commandRepository = commandRepository;
 		this.bookRepository = bookRepository;
 		this.lignecommandRepository = lignecommandRepository;
+		this.userRepository = userRepository;
 	}
 /*
 	public static double calculateTotalPrice() {
@@ -74,13 +78,20 @@ public class CommandController {
 
 	@GetMapping("list")
 	// @ResponseBody
-	public String listCommand(Model model) {
+	public String listCommand(Model model,@RequestParam("email") String em) {
+	
+			LigneCommandController.email = em ;
+		User user = userRepository.findByEmail(em);
+		id_user = user.getId();
+		System.out.println(id_user);
 		List<Command> lp = (List<Command>) commandRepository.findAll();
+		List<Command> lp2 = (List<Command>) commandRepository.findCommandByIdUser(id_user);
 
 		if (lp.size() == 0)
 			lp = null;
 
 		model.addAttribute("commands", lp);
+		model.addAttribute("commandsUser", lp2);
 		return "Command/listCommands";
 	}
 
@@ -97,7 +108,7 @@ public class CommandController {
 		return "Command/showBooks";
 	}
 
-	
+/*	
 	@GetMapping("listByUser")
 	// @ResponseBody
 	public String listCommandById(Model model) {
@@ -106,9 +117,9 @@ public class CommandController {
 		if (lp.size() == 0)
 			lp = null;
 
-		model.addAttribute("commands", lp);
+		model.addAttribute("commandsUser", lp);
 		return "Command/listCommands";
-	}
+	}*/
 	
 	@GetMapping("show/{id}")
 	public String showDetailsCommand(@PathVariable("id") long id, Model model) {

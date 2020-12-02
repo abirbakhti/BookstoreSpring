@@ -13,35 +13,86 @@
 	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
 	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
 	crossorigin="anonymous">
+	<style>
+.command {
+	background-color: rgba(255, 255, 255, .0);
+	border: none;
+	color: #9F9E9E;
+}
+</style>
 </head>
 <body>
+	<!-- <div th:replace="fragments/header :: header" />  -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="http://127.0.0.1:82"><i class="fas fa-book"></i> AKA
-			Bookstore</a>
+		<a class="navbar-brand" href="http://127.0.0.1:82"><i
+			class="fas fa-book"></i> AKA Bookstore</a>
 		<div class="collapse navbar-collapse" id="navbarText">
-			<ul style="display: none;"  id="admin" class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="http://127.0.0.1:82">Home</a></li>
+			<ul style="display: none;" id="admin" class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link"
+					href="http://127.0.0.1:82">Home</a></li>
 
-				<li   class="nav-item admin"><a class="nav-link" href="/book/list/">Book management</a></li>
-				<li   class="nav-item admin"><a class="nav-link" href="/command/list/">Command management</a></li>
-				<li  class="nav-item admin"><a class="nav-link" href="/command/list/">Account management</a></li>
+				<li class="nav-item admin"><a class="nav-link"
+					href="/book/list/">Book management</a></li>
+				<li class="nav-item admin">
+					<div hidden sec:authentication="name" id="email"></div>
+				<li class="nav-item user"><form action="#"
+						th:action="@{/command/list}">
+
+						<input hidden type="text" id="in" name="email" /> <input class="command"
+							type="submit" value="Command management" />
+					</form> <script type="text/javascript">
+						var x = document.getElementById("email").innerText;
+						document.getElementById("in").value = x;
+					</script></li>
+
+
+
+
+
+
+
+				</li>
+				<li class="nav-item admin"><a class="nav-link"
+					href="/command/list/">Account management</a></li>
 			</ul>
-			
-			<ul style="display: none;" id="user" class="navbar-nav mr-auto">	
-				<li   class="nav-item user"><a class="nav-link" href="/book/list/">Books</a></li>
-				<li   class="nav-item user"><a class="nav-link" href="/command/list/">My Commands</a></li>
-				<li class="nav-item user"><a class="nav-link" href="/command/list/">Cart</a></li>
+
+			<ul style="display: none;" id="user" class="navbar-nav mr-auto">
+
+
+
+				<li class="nav-item user"><form action="#"
+						th:action="@{/command/list}">
+
+						<input hidden type="text" id="in1" name="email" /> <input
+							class="command" type="submit" value="My Commands" />
+					</form> <script type="text/javascript">
+						var x = document.getElementById("email").innerText;
+						document.getElementById("in1").value = x;
+					</script></li>
+
+
+				<li class="nav-item user"><form action="#"
+						th:action="@{../lignecommand/add}">
+
+						<input hidden type="text" id="in2" name="email" /> <input
+							class="command" type="submit" value="Cart" />
+					</form> <script type="text/javascript">
+						var x = document.getElementById("email").innerText;
+						document.getElementById("in2").value = x;
+					</script></li>
 			</ul>
 		</div>
 		<div>
-				<span th:style="'color: white'" sec:authentication="name"></span>
-								<a class="btn btn-primary mx-2" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
-				
+			<span th:style="'color: white'" sec:authentication="name"></span> <a
+				class="btn btn-primary mx-2" th:href="@{/logout}"><i
+				class="fas fa-sign-out-alt"></i>Sign Out</a>
+
 		</div>
 	</nav>
 
+
 	<h2 align="center" class="my-5">List of Commands</h2>
-	<div class="container my-2">
+	<div class="container my-2" id="listCommandAdmin"  style="visibility:hidden;position: absolute;">
 		<div class="card">
 			<div class="card-body">
 				<div th:switch="${commands}" class="container my-5">
@@ -81,6 +132,50 @@
 		</div>
 	</div>
 	
+	
+	
+	
+	
+	<div class="container my-2" id="listCommandUser" style="visibility:hidden;position: absolute;" >
+		<div class="card">
+			<div class="card-body">
+				<div th:switch="${commandsUser}" class="container my-5">
+					<p class="my-5">
+					<!-- per role -->
+						<a  th:href="@{'/command/listBooks'}" class="btn btn-dark"><i class="fas fa-plus-circle"></i> Add command</i></a>
+					</p>
+					<div class="col">
+						<h2 th:case="null">No commands yet!</h2>
+						<div th:case="*">
+							<table class="table table-striped table-responsive-md">
+								<thead>
+									<tr style="text-align:center;">
+										<th>Id</th>
+										<th>Date</th>
+										<th>Price</th>
+									
+									
+										<th>Details</th>
+									</tr>
+								</thead>
+								<tbody style="text-align:center;">
+									<tr th:each="command : ${commandsUser}">
+										<td th:text="${command.id}"></td>
+										<td th:text="${command.date}"></td>
+										<td th:text="${command.totalPrice}"></td>
+										
+										
+										<td><a th:href=@{/command/show/{id}(id=${command.id})}  class="btn btn-primary"><i class="fas fa-user-show ml-2"></i>Show Details</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<div hidden sec:authentication="principal.authorities" id="role"></div>
 	<script type="text/javascript">
 			var x = document.getElementById("role").innerText;
@@ -88,9 +183,11 @@
 
 			
 			if (x =="[USER]")
-				document.getElementById("user").style.display = "contents";
+				{document.getElementById("user").style.display = "contents";
+			     document.getElementById("listCommandUser").style.visibility = "visible";}
 			else
-				document.getElementById("admin").style.display = "contents";
+				{document.getElementById("admin").style.display = "contents";
+			document.getElementById("listCommandAdmin").style.visibility = "visible";}
 		</script>
 </body>
 </html>

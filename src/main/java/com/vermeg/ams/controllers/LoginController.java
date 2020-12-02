@@ -21,7 +21,7 @@ import com.vermeg.ams.services.UserService;
 @Controller
 public class LoginController {
 	
-	public static String email;
+
 	
 	@Autowired
 	private UserService userService;

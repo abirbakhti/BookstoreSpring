@@ -13,32 +13,84 @@
 	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
 	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
 	crossorigin="anonymous">
+	<style>
+.command {
+	background-color: rgba(255, 255, 255, .0);
+	border: none;
+	color: #9F9E9E;
+}
+</style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="http://127.0.0.1:82"><i class="fas fa-book"></i> AKA
-			Bookstore</a>
+<!-- <div th:replace="fragments/header :: header" />  -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="http://127.0.0.1:82"><i
+			class="fas fa-book"></i> AKA Bookstore</a>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul style="display: none;" id="admin" class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="http://127.0.0.1:82">Home</a></li>
+				<li class="nav-item active"><a class="nav-link"
+					href="http://127.0.0.1:82">Home</a></li>
 
-				<li   class="nav-item admin"><a class="nav-link" href="/book/list/">Book management</a></li>
-				<li   class="nav-item admin"><a class="nav-link" href="/command/list/">Command management</a></li>
-				<li  class="nav-item admin"><a class="nav-link" href="/command/list/">Account management</a></li>
+				<li class="nav-item admin"><a class="nav-link"
+					href="/book/list/">Book management</a></li>
+				<li class="nav-item admin">
+					<div hidden sec:authentication="name" id="email"></div>
+				<li class="nav-item user"><form action="#"
+						th:action="@{/command/list}">
+
+						<input hidden type="text" id="in" name="email" /> <input class="command"
+							type="submit" value="Command management" />
+					</form> <script type="text/javascript">
+						var x = document.getElementById("email").innerText;
+						document.getElementById("in").value = x;
+					</script></li>
+
+
+
+
+
+
+
+				</li>
+				<li class="nav-item admin"><a class="nav-link"
+					href="/command/list/">Account management</a></li>
 			</ul>
-			
-			<ul style="display: none;" id="user" class="navbar-nav mr-auto">	
-				<li   class="nav-item user"><a class="nav-link" href="/book/list/">Books</a></li>
-				<li   class="nav-item user"><a class="nav-link" href="/command/list/">My Commands</a></li>
-				<li class="nav-item user"><a class="nav-link" href="/command/list/">Cart</a></li>
+
+			<ul style="display: none;" id="user" class="navbar-nav mr-auto">
+
+
+
+				<li class="nav-item user"><form action="#"
+						th:action="@{/command/list}">
+
+						<input hidden type="text" id="in1" name="email" /> <input
+							class="command" type="submit" value="My Commands" />
+					</form> <script type="text/javascript">
+						var x = document.getElementById("email").innerText;
+						document.getElementById("in1").value = x;
+					</script></li>
+
+
+				<li class="nav-item user"><form action="#"
+						th:action="@{../lignecommand/add}">
+
+						<input hidden type="text" id="in2" name="email" /> <input
+							class="command" type="submit" value="Cart" />
+					</form> <script type="text/javascript">
+						var x = document.getElementById("email").innerText;
+						document.getElementById("in2").value = x;
+					</script></li>
 			</ul>
 		</div>
 		<div>
-				<span th:style="'color: white'" sec:authentication="name"></span>
-								<a class="btn btn-primary mx-2" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
-				
+			<span th:style="'color: white'" sec:authentication="name"></span> <a
+				class="btn btn-primary mx-2" th:href="@{/logout}"><i
+				class="fas fa-sign-out-alt"></i>Sign Out</a>
+
 		</div>
 	</nav>
+
+
 
 	<div class="container my-5">
 		
